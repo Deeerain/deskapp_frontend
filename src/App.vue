@@ -1,16 +1,30 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import Sidebar from "./components/aside/Sidebar.vue"
+import { useAuthStore } from "./store/auth_store";
+import { useRouter } from "vue-router";
+
+const auth_store = useAuthStore()
+const router = useRouter()
+
+
+onMounted(() => {
+  if (!auth_store.is_authencicated)  {
+    router.push({name: 'auth'})
+  }
+})
 </script>
 
 <template>
-  <header>
-
-  </header>
+  <Sidebar branding="helpdesk" />
   <main>
-    <RouterView />
-  </main>
-  <footer>
+    <header>
 
-  </footer>
+    </header>
+    <div class="content">
+      <RouterView />
+    </div>
+  </main>
 </template>
 
 <style scoped lang="scss">
