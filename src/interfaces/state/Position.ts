@@ -1,4 +1,4 @@
-import Department from "../User"
+import { Department } from './Department'
 
 export default interface Position {
     id: number

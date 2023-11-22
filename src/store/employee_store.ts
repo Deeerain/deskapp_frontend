@@ -3,7 +3,17 @@ import { defineStore } from "pinia";
 import Employee from "../interfaces/state/Employee";
 
 export const useEmployeeStore = defineStore('employeeStore', {
-    state: () => (<Employee>{}),
+    state: () => (<Employee>{
+        username: "Admin",
+        first_name: "Вася",
+        last_name: "Пупкин",
+        position: {
+            name: "Старший программист",
+            department: {
+                name: "IT",
+            }
+        }
+    }),
     actions: {
         async LoadEmployeeData() {
             try {
@@ -15,6 +25,11 @@ export const useEmployeeStore = defineStore('employeeStore', {
             }catch(err) {
                 console.log(err)
             }
+        }
+    },
+    getters: {
+        get_employee: (state) => {
+            return state
         }
     }
 })

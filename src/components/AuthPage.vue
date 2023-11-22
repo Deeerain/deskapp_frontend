@@ -30,10 +30,10 @@ const onAuthFormSubmit = async () => {
 <template>
     <form @submit.prevent="onAuthFormSubmit">
         <fieldset>
-            <input v-model="formData.username" type="email" autocomplete="email" name="email" required placeholder="Имя пользователя или Email">
-            <input v-model="formData.password" type="password" autocomplete="current-password" required placeholder="Пароль" />
+            <input v-model="formData.username" class="input" type="email" autocomplete="email" name="email" required placeholder="Имя пользователя или Email">
+            <input v-model="formData.password" class="input" type="password" autocomplete="current-password" required placeholder="Пароль" />
         </fieldset>
-        <input type="submit" value="Войти">
+        <input class="btn" type="submit" value="Войти">
     </form>
 </template>
 

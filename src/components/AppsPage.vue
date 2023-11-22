@@ -33,9 +33,9 @@ onMounted(() => apps_store.load_apps())
         <div class="heading">
             <h2>Заявки</h2>
             <form id="search" @submit:prevent="searh_form_submit" @input="form_input">
-                <input v-model="search_text" type="search" name="search">
+                <input class="input" v-model="search_text" type="search" name="search">
             </form>
-            <RouterLink class="btn add-btn" :to="{ name: 'home' }">Создать</RouterLink>
+            <RouterLink class="btn add-btn" :to="{ name: 'new-app' }">Создать</RouterLink>
         </div>
         <div class="apps__list">
             <table cellspacing="0">
