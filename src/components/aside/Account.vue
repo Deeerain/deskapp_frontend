@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import Employee from '../../interfaces/state/Employee';
+import { IUser } from '../../api/users';
+
 
 const props = defineProps<{
-    employee: Employee
+    user: IUser
 }>()
 
 </script>
@@ -11,9 +12,11 @@ const props = defineProps<{
     <div class="account-wrapper">
         <div class="account">
             <div class="account__information">
-                <small>{{ employee.username }}</small>
-                <h4>{{ employee.first_name }} {{ employee.last_name }}</h4>
-                <h5>{{ employee.position.name }}, {{ employee.position.department.name }}</h5>
+                <small>{{ user.username }}</small>
+                <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                <div v-if="user.position" class="position-info">
+                    <h5>{{ user.position.name }}, {{ user.position.department.name }}</h5>
+                </div>
             </div>
             <div class="account__buttons">
                 <button class="btn">

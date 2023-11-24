@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import Sidebar from "./components/aside/Sidebar.vue"
+import { computed, onMounted } from "vue";
 import { useAuthStore } from "./store/auth_store";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const auth_store = useAuthStore()
 const router = useRouter()
+const route = useRoute()
+
+const layout = computed(() => {
+  const layout_name = route.meta.layout || 'default'
+  return `${layout_name}-layout`
+})
 
 
 onMounted(() => {
@@ -16,15 +21,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <Sidebar branding="helpdesk" />
-  <main>
-    <header>
-
-    </header>
-    <div class="content">
-      <RouterView />
-    </div>
-  </main>
+  <component :is="layout">
+    <RouterView />
+  </component>
 </template>
 
 <style scoped lang="scss">

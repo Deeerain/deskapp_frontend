@@ -1,40 +1,41 @@
-import axios, { AxiosError } from "axios";
 import { defineStore } from "pinia";
-import { useEmployeeStore } from "./employee_store";
+import { useUserStore } from "./user_store";
+
+import { login } from "../api/auth";
 
 export const useAuthStore = defineStore('authStore', {
     state: () => ({
         access_token: localStorage.getItem('access_token'),
         refres_token: localStorage.getItem('refresh_token'),
-        is_authencicated: false
+        is_authencicated: Boolean(localStorage.getItem('is_authenticated')),
     }),
     actions: {
         async login(username_or_email: string, password: string) {
             try {
-                const response = await axios.post('auth/token/', {
+                const user_data = await login({
                     username: username_or_email,
-                    password: password,
+                    password: password
                 })
 
-                localStorage.setItem('access_token', response.data['access_token'])
-                localStorage.setItem('refresh_token', response.data['access_token'])
+                localStorage.setItem('access_token', user_data.access)
+                localStorage.setItem('refresh_token', user_data.refresh)
 
-                const employeeStore = useEmployeeStore()
+                const employeeStore = useUserStore()
 
-                await employeeStore.LoadEmployeeData()
+                await employeeStore.LoadCurrentUserData()
+
+                localStorage.setItem('is_authenticated', '1')
+
+                return true
 
             }catch(err) {
                 console.error(err)
             }
+
+            return false
         },
         async verify_token(token: string) {
-            try {
-                const response = await axios.post('auth/token/verify/', {
-                    access_token: token
-                })
-            }catch(err) {
-                console.error(err)
-            }
+            return
         },
         async logout() {
             return

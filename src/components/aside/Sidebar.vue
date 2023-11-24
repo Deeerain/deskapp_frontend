@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { useEmployeeStore } from "../../store/employee_store";
-import { Employee } from '../../interfaces/state/Employee'
+import { useUserStore } from '../../store/user_store'
+import { computed, onMounted } from 'vue';
+
+const user_store = useUserStore()
+const user = computed(() => user_store.get_user)
 import Account from "./Account.vue"
-import { ref } from "vue";
 
 const props = defineProps<{
   branding: string
 }>()
 
-const employee_store = useEmployeeStore()
-const employee = ref<Employee>(employee_store.get_employee)
+onMounted(async () => {
+  await user_store.LoadCurrentUserData()
+})
 
 </script>
 
@@ -28,7 +31,7 @@ const employee = ref<Employee>(employee_store.get_employee)
             Заявки</RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'home' }" class="nav-menu__item">Заявки</RouterLink>
+          <RouterLink :to="{ name: 'home' }" class="nav-menu__item">Пользователи</RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'home' }" class="nav-menu__item">Заявки</RouterLink>
@@ -38,8 +41,8 @@ const employee = ref<Employee>(employee_store.get_employee)
         </li>
       </ul>
     </nav>
-    <Account :employee="employee" />
+    <Account :user="user" />
   </aside>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss"></style>../../store/user_store
