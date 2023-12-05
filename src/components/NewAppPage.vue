@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 
 const form_data = reactive({
@@ -18,7 +19,8 @@ const form_data = reactive({
         <div class="new-app__form">
             <form id="newapp">
                 <fieldset>
-                    <input class="input" v-model="form_data.theme" type="text" name="theme" id="" placeholder="Тема обращения">
+                    <input class="input" v-model="form_data.theme" type="text" name="theme" id=""
+                        placeholder="Тема обращения">
                     <textarea class="input" v-model="form_data.text" required placeholder="Текст обращения"></textarea>
                 </fieldset>
 
@@ -28,5 +30,4 @@ const form_data = reactive({
     </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

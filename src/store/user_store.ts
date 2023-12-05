@@ -1,42 +1,24 @@
 import { defineStore } from "pinia";
-import { get_me, IUser } from "../api/users";
+import Api from "../services";
+import { ref } from "vue";
+import { User } from "../services/users/types";
 
+export const useUserStore = defineStore("userStore", {
+  state: () => ({
+    user: ref<User>(),
+  }),
+  actions: {
+    async LoadCurrentUserData() {
+      const { success, content } = await Api.users.GetMe();
 
-export const useUserStore = defineStore('userStore', {
-    state: () => (<IUser>{
-        username: "Admin",
-        first_name: "Вася",
-        last_name: "Пупкин",
-        position: {
-            name: "Старший программист",
-            department: {
-                name: "IT",
-            }
-        }
-    }),
-    actions: {
-        async LoadCurrentUserData() {
-            try {
-                const response = await get_me()
-
-                console.log(response);
-                
-
-                this.username = response.username
-                this.first_name = response.first_name
-                this.last_name = response.last_name
-                this.email = response.last_name
-                this.id = response.id
-                this.telephone = response.telephone
-                this.position = response.position
-            }catch(err) {
-                console.log(err)
-            }
-        }
+      if (content && success) {
+        this.user = content;
+      }
     },
-    getters: {
-        get_user: (state) => {
-            return state
-        }
-    }
-})
+  },
+  getters: {
+    get_user: (state) => {
+      return state.user;
+    },
+  },
+});

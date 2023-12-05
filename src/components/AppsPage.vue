@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useAppsStore } from '../store/apps_store'
-import App from '../interfaces/App'
+import { useRouter } from 'vue-router';
 
 const apps_store = useAppsStore()
 

@@ -13,9 +13,12 @@ const layout = computed(() => {
 })
 
 
-onMounted(() => {
-  if (!auth_store.is_authencicated)  {
-    router.push({name: 'auth'})
+onMounted(async () => {
+  console.error(auth_store.is_authencicated);
+  
+
+  if (!auth_store.is_authencicated) {
+    router.push({ name: 'auth' })
   }
 })
 </script>
@@ -26,5 +29,4 @@ onMounted(() => {
   </component>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
