@@ -34,5 +34,12 @@ export const useAppsStore = defineStore("appsStore", {
     get_filtered_apps: (state) => {
       return state.apps;
     },
+    get_app_by_id(state) {
+      return (id: number) => {
+        const app = state.apps.find((v) => v.id === id);
+
+        return app;
+      };
+    },
   },
 });

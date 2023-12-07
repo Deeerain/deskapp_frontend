@@ -21,10 +21,6 @@ const form_input = (event: Event) => {
 
 const filter = (text: string) => {
 }
-
-
-onMounted(() => apps_store.load_apps())
-
 </script>
 
 <template>
@@ -47,7 +43,9 @@ onMounted(() => apps_store.load_apps())
                 </thead>
                 <tbody>
                     <tr v-for="app in apps">
-                        <td>{{ app.id }}</td>
+                        <td>
+                            <RouterLink :to="{ name: 'app-detail', params: { 'id': app.id } }">{{ app.id }}</RouterLink>
+                        </td>
                         <td>{{ app.theme }}</td>
                         <td>{{ app.status }}</td>
                         <td>{{ app.at_created }}</td>

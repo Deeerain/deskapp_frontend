@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserStore } from '../../store/user_store'
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 
 import Account from "./Account.vue"
 
@@ -10,11 +10,6 @@ const props = defineProps<{
 const user_store = useUserStore()
 const user = computed(() => {
   return user_store.get_user
-})
-
-
-onMounted(async () => {
-  await user_store.LoadCurrentUserData()
 })
 
 </script>
