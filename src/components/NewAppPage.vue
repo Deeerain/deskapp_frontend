@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useAppsStore } from '../store/apps_store';
 import { useRouter } from 'vue-router';
 
 
+const apps_store = useAppsStore();
+const router = useRouter();
+
 const form_data = reactive({
     theme: "",
-    text: ""
-})
+    text: "",
+});
+
+const onFormSubmit = async (event: Event) => {
+    const form = event.target as HTMLFormElement;
+
+    apps_store.create({
+        theme: form_data.theme,
+        text: form_data.text,
+    });
+
+    form.reset();
+    router.back();
+}
 
 
 </script>
@@ -17,7 +33,7 @@ const form_data = reactive({
     </div>
     <div class="new-app">
         <div class="new-app__form">
-            <form id="newapp">
+            <form id="newapp" @submit.prevent="onFormSubmit">
                 <fieldset>
                     <input class="input" v-model="form_data.theme" type="text" name="theme" id=""
                         placeholder="Тема обращения">

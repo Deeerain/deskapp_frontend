@@ -2,13 +2,16 @@
 import { useUserStore } from '../../store/user_store'
 import { computed, onMounted } from 'vue';
 
-const user_store = useUserStore()
-const user = computed(() => user_store.get_user)
 import Account from "./Account.vue"
 
 const props = defineProps<{
   branding: string
 }>()
+const user_store = useUserStore()
+const user = computed(() => {
+  return user_store.get_user
+})
+
 
 onMounted(async () => {
   await user_store.LoadCurrentUserData()
@@ -28,7 +31,8 @@ onMounted(async () => {
         <li>
           <RouterLink :to="{ name: 'home' }" class="nav-menu__item">
             <img src="../../assets/img/event-icon.svg" alt="">
-            Заявки</RouterLink>
+            Заявки
+          </RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'home' }" class="nav-menu__item">Пользователи</RouterLink>
@@ -41,8 +45,8 @@ onMounted(async () => {
         </li>
       </ul>
     </nav>
-    <Account :user="user" />
+    <Account v-if="user" :user="user" />
   </aside>
 </template>
 
-<style lang="scss"></style>../../store/user_store
+<style lang="scss"></style>

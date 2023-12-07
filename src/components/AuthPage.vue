@@ -13,6 +13,7 @@ const formData = reactive({
 
 const onAuthFormSubmit = async () => {
     const auth_result = await authStore.login(formData.username, formData.password)
+
     console.log(auth_result)
     if (auth_result) {
         router.push({ name: 'home' })

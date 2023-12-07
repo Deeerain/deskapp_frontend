@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { IUser } from '../../api/users';
-
+import { User } from '../../services/users/types';
 
 const props = defineProps<{
-    user: IUser
+    user: User
 }>()
-
 </script>
 
 <template>
@@ -15,7 +13,7 @@ const props = defineProps<{
                 <small>{{ user.username }}</small>
                 <h4>{{ user.first_name }} {{ user.last_name }}</h4>
                 <div v-if="user.position" class="position-info">
-                    <h5>{{ user.position.name }}, {{ user.position.department.name }}</h5>
+                    <h5>{{ user.position.name }}, {{ user.position.departament.name }}</h5>
                 </div>
             </div>
             <div class="account__buttons">

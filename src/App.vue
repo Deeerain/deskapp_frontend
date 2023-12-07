@@ -14,9 +14,6 @@ const layout = computed(() => {
 
 
 onMounted(async () => {
-  console.error(auth_store.is_authencicated);
-  
-
   if (!auth_store.is_authencicated) {
     router.push({ name: 'auth' })
   }

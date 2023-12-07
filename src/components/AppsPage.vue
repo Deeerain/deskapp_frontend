@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useAppsStore } from '../store/apps_store'
-import { useRouter } from 'vue-router';
 
 const apps_store = useAppsStore()
 
-const apps = ref<Array<App>>(apps_store.get_apps)
+const apps = computed(() => {
+    return apps_store.get_apps
+})
 
 const search_text = ref<string>("")
 
@@ -19,10 +20,8 @@ const form_input = (event: Event) => {
 }
 
 const filter = (text: string) => {
-    const new_apps = apps_store.get_filtered_apps(text)
-
-    apps.value = new_apps
 }
+
 
 onMounted(() => apps_store.load_apps())
 
@@ -44,13 +43,15 @@ onMounted(() => apps_store.load_apps())
                     <td>Тема </td>
                     <td>Статус</td>
                     <td>Дата создания</td>
+                    <td>Дата Обнавления</td>
                 </thead>
                 <tbody>
                     <tr v-for="app in apps">
                         <td>{{ app.id }}</td>
                         <td>{{ app.theme }}</td>
                         <td>{{ app.status }}</td>
-                        <td>{{ app.created.toLocaleString() }}</td>
+                        <td>{{ app.at_created }}</td>
+                        <td>{{ app.at_updated }}</td>
                     </tr>
                 </tbody>
             </table>
