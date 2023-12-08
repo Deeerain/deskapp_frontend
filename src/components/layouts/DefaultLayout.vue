@@ -1,17 +1,36 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useUserStore } from '../../store/user_store';
-import Sidebar from '../aside/Sidebar.vue'
+import { useAuthStore } from '../../store/auth_store';
+import Sidebar from '../aside/Sidebar.vue';
+import ContentWrapper from '../content/ContentWrapper.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
+const authStore = useAuthStore();
+const sidebarCollapsed = ref<boolean>(false);
 const user = computed(() => {
   return userStore.get_user;
 });
 
+const onVisibleButtonClickHandler = () => {
+  sidebarCollapsed.value = !sidebarCollapsed.value;
+}
+
+const logoutButtonClickHandler = () => {
+
+  authStore.logout().catch(() => {
+    authStore.$reset();
+  })
+
+  router.push({ name: 'auth' });
+}
+
 </script>
 
 <template>
-  <Sidebar branding="helpdesk" :collapsed="true">
+  <Sidebar branding="helpdesk" :collapsed="sidebarCollapsed" @on-control-button-click="onVisibleButtonClickHandler">
     <div class="nav">
       <ul>
         <li>
@@ -30,10 +49,17 @@ const user = computed(() => {
     </template>
   </Sidebar>
   <main>
-    <div class="content">
+    <ContentWrapper :visible-sidebar-button="sidebarCollapsed"
+      @on-visible-sidebar-button-click="onVisibleButtonClickHandler" @on-logout-button-click="logoutButtonClickHandler">
       <slot></slot>
-    </div>
+    </ContentWrapper>
   </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+main {
+  .content {
+    height: 100%;
+  }
+}
+</style>

@@ -16,4 +16,16 @@ app.use(pinia);
 app.component("default-layout", DefaultLayout);
 app.component("empty-layout", EmptyLayout);
 
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/auth/"];
+  const is_auth = Boolean(localStorage.getItem("is_authenticated"));
+  const auth_required = !publicPages.includes(to.path);
+
+  if (auth_required && !is_auth) {
+    next("/auth/");
+  } else {
+    next();
+  }
+});
+
 app.mount("#app");

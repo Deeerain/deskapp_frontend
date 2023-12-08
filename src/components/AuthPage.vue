@@ -2,29 +2,39 @@
 import { onMounted, reactive } from 'vue';
 import router from '../router';
 import { useAuthStore } from '../store/auth_store';
+import { useUserStore } from '../store/user_store';
+import { useAppsStore } from '../store/apps_store';
 
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
+const userStore = useUserStore();
+const appsStore = useAppsStore();
 const formData = reactive({
     username: "",
     password: ""
-})
+});
 
 
 const onAuthFormSubmit = async () => {
     const auth_result = await authStore.login(formData.username, formData.password)
 
-    console.log(auth_result)
     if (auth_result) {
-        router.push({ name: 'home' })
+        await loadData();
+        router.push({ name: 'home' });
     }
 }
 
-onMounted(() => {
-    if (authStore.is_authencicated) {
-        router.back()
+onMounted(async () => {
+    if (authStore.user_authenticated) {
+        await loadData();
+        router.back();
     }
-})
+});
+
+const loadData = async () => {
+    await userStore.LoadCurrentUserData();
+    await appsStore.load_apps();
+}
 
 </script>
 

@@ -7,6 +7,11 @@ export const useAuthStore = defineStore("authStore", {
     refres_token: localStorage.getItem("refresh_token"),
     is_authencicated: Boolean(localStorage.getItem("is_authenticated")),
   }),
+  getters: {
+    user_authenticated: (state) => {
+      return state.is_authencicated;
+    },
+  },
   actions: {
     async login(username_or_email: string, password: string) {
       const { success } = await Api.auth.getTokens({
@@ -17,10 +22,10 @@ export const useAuthStore = defineStore("authStore", {
       return success;
     },
     async verify_token(token: string) {
-      return token
+      return token;
     },
     async logout() {
-      return;
+      localStorage.clear();
     },
   },
 });
