@@ -15,4 +15,5 @@ export type User = {
   first_name: string;
   last_name: string;
   position: Position;
+  is_staff: boolean;
 };
